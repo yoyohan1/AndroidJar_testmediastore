@@ -50,6 +50,10 @@ public class MainActivity {
         Log.i("Unity", "InitCompareApi成功！mContext:" + mContext.getPackageName());
     }
 
+    /*
+    *@author yoyohan
+    *@description:
+    */
     public void GetAllPhotoInfo() {
 
         //Log.i("Unity", "GetAllPhotoInfo mContext:" + mContext.getPackageName());
