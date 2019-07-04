@@ -51,9 +51,9 @@ public class MainActivity {
     }
 
     /*
-    *@author yoyohan
-    *@description:
-    */
+     *@author yoyohan
+     *@description:
+     */
     public void GetAllPhotoInfo() {
 
         //Log.i("Unity", "GetAllPhotoInfo mContext:" + mContext.getPackageName());
@@ -70,6 +70,10 @@ public class MainActivity {
         });*/
     }
 
+    /*
+     *@author yoyohan
+     *@description:
+     */
     public void GetAllMovieInfo() {
         videoMediaStore.GetAllMovieInfo();
     }
@@ -180,9 +184,9 @@ public class MainActivity {
     }
 
     /*
-    *@author yoyohan
-    *@description:
-    */
+     *@author yoyohan
+     *@description:
+     */
     private byte[] readtextbytes(InputStream inputStream) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         //长度这里暂时先写成1024
