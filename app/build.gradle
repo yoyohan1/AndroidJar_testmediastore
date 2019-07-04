@@ -1,0 +1,72 @@
+apply plugin: 'com.android.library'
+//文件顶部添加
+apply plugin: 'maven-publish'
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    //implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+    //图片压缩
+    //implementation 'top.zibin:Luban:1.1.8'
+    //implementation files('libs/Luban-1.1.8-sources.jar')
+    //implementation files('libs/LuBan.jar')
+    //implementation files('libs/TestCompareVideo.jar')
+    //implementation(name: 'mylibrary-debug', ext: 'aar')
+    //implementation files('libs/commons-codec-1.11.jar')
+    compileOnly files('libs/gson-2.8.0.jar')
+    compileOnly files('libs/commons-codec-1.11.jar')
+    compileOnly files('libs/unity-classes.jar')
+    compileOnly files('libs/shareData.jar')
+    implementation files('libs/LuBan.jar')
+
+}
+
+task makeJar(type:Copy){
+    delete('build/libs/test.jar')
+    from('build/intermediates/packaged-classes/release/')
+    into('build/libs/')
+    include('classes.jar')
+    rename('classes.jar','TestMediaStore.jar')
+}
+makeJar.dependsOn(build)
+
+
+repositories{
+    flatDir{
+        dirs 'libs'
+    }
+}
+
+
+apply plugin: 'maven'
+uploadArchives {
+    configuration = configurations.archives
+    repositories {
+        mavenDeployer {
+            repository(url: "file://E://myaar/")
+            pom.project {
+                version '1.0.0'
+                artifactId 'mcdnb'
+                groupId 'com.payment.nb'
+                packaging 'aar'
+                description 'mcdnb'
+            }
+        }
+    }
+}
