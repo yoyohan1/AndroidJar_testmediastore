@@ -1,21 +1,18 @@
-package com.example.testmediastore;
+package com.example.unitytestmediastore;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Debug;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
 
-import com.example.testmediastore.MediaStore.IMediaThumbnailCallback;
-import com.example.testmediastore.MediaStore.ImagesMediaStore;
-import com.example.testmediastore.MediaStore.*;
-import com.example.testmediastore.MediaStore.VideoMediaStore;
+import com.example.unitytestmediastore.MediaStore.IMediaThumbnailCallback;
+import com.example.unitytestmediastore.MediaStore.ImagesMediaStore;
+import com.example.unitytestmediastore.MediaStore.*;
+import com.example.unitytestmediastore.MediaStore.VideoMediaStore;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.unity3d.player.UnityPlayer;

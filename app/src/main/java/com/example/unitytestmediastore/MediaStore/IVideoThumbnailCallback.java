@@ -1,6 +1,4 @@
-package com.example.testmediastore.MediaStore;
-
-import android.graphics.Bitmap;
+package com.example.unitytestmediastore.MediaStore;
 
 /**
  * Created by Administrator on 2019/4/27.

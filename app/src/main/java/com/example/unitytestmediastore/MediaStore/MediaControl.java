@@ -1,11 +1,10 @@
-package com.example.testmediastore.MediaStore;
+package com.example.unitytestmediastore.MediaStore;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;

@@ -1,13 +1,12 @@
-package com.example.testmediastore.MediaStore;
+package com.example.unitytestmediastore.MediaStore;
 
 import android.app.Activity;
-import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
 
-import com.example.testmediastore.MainActivity;
+import com.example.unitytestmediastore.MainActivity;
 import com.google.gson.Gson;
 import com.unity3d.player.UnityPlayer;
 
@@ -57,8 +56,11 @@ public class ImagesMediaStore {
 
                         //存储对应关系
                         if (allPhotosTemp.containsKey(dirPath)) {
-                            List<MediaBean> data = allPhotosTemp.get(dirPath);
-                            data.add(new MediaBean(path, size, displayName).SetWidth(width).SetHeight(height));
+                            //大于1兆的图片才加入
+                            if (size >= 1024) {
+                                List<MediaBean> data = allPhotosTemp.get(dirPath);
+                                data.add(new MediaBean(path, size, displayName).SetWidth(width).SetHeight(height));
+                            }
                             //Log.i("cxs","getAllPhotoInfo "+data.size()+",path="+data.get(0).path+",name="+data.get(0).displayName);
                             continue;
                         } else {

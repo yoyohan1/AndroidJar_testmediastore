@@ -1,4 +1,4 @@
-package com.example.testmediastore.MediaStore;
+package com.example.unitytestmediastore.MediaStore;
 
 import java.util.List;
 

@@ -1,11 +1,10 @@
-package com.example.testmediastore;
+package com.example.unitytestmediastore;
 
 /**
  * Created by Administrator on 2019/3/10.
  */
 
 import android.content.Context;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
