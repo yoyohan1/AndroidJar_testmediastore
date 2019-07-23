@@ -36,6 +36,8 @@ dependencies {
     compileOnly(name: 'app-debug', ext: 'aar')
     implementation files('libs/LuBan.jar')
 
+
+
 }
 
 task makeJar(type:Copy){
