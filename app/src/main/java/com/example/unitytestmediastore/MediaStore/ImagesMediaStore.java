@@ -21,7 +21,7 @@ public class ImagesMediaStore {
     private static Gson gson = new Gson();
 
     public void GetAllPhotoInfo() {
-        Log.i("cxs", "开始获取图片！");
+        Log.i("cxs", "开始获取图片！1");
         final Activity mUnityPlayer = UnityPlayer.currentActivity;
         new Thread(new Runnable() {
             @Override
@@ -57,18 +57,23 @@ public class ImagesMediaStore {
                         String dirPath = new File(path).getParentFile().getAbsolutePath();
 
                         //过滤3box路径下的
-                        if (dirPath.replace(Environment.getExternalStorageDirectory().getPath(), "").startsWith("/3box/"))
+                        if (dirPath.replace(Environment.getExternalStorageDirectory().getPath(), "").startsWith("/3box/")) {
+                            Log.i("cxs", "过滤掉3box路径下的" + "  该图片为 size=" + size + ",path=" + path + ",name=" + displayName);
                             continue;
+                        }
+
+                        //过滤小于100K的
+                        if (size < 100) {
+                            Log.i("cxs", "过滤掉小于100K的" + "  该图片为 size=" + size + ",path=" + path + ",name=" + displayName);
+                            continue;
+                        }
+
 
                         //存储对应关系
                         if (allPhotosTemp.containsKey(dirPath)) {
-                            //大于1兆的图片才加入
-                            if (size >= 100) {
-                                List<MediaBean> data = allPhotosTemp.get(dirPath);
-                                data.add(new MediaBean(path, size, displayName).SetWidth(width).SetHeight(height));
-                            }
+                            List<MediaBean> data = allPhotosTemp.get(dirPath);
+                            data.add(new MediaBean(path, size, displayName).SetWidth(width).SetHeight(height));
                             //Log.i("cxs","getAllPhotoInfo "+data.size()+",path="+data.get(0).path+",name="+data.get(0).displayName);
-                            continue;
                         } else {
                             List<MediaBean> data = new ArrayList<>();
                             data.add(new MediaBean(path, size, displayName).SetWidth(width).SetHeight(height));

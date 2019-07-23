@@ -33,6 +33,7 @@ dependencies {
     compileOnly files('libs/commons-codec-1.11.jar')
     compileOnly files('libs/unity-classes.jar')
     compileOnly files('libs/shareData.jar')
+    compileOnly(name: 'app-debug', ext: 'aar')
     implementation files('libs/LuBan.jar')
 
 }
