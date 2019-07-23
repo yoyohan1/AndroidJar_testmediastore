@@ -3,6 +3,7 @@ package com.example.unitytestmediastore.MediaStore;
 import android.app.Activity;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 
@@ -42,22 +43,27 @@ public class ImagesMediaStore {
                     while (mCursor.moveToNext()) {
                         // 获取图片的路径
                         String path = mCursor.getString(mCursor.getColumnIndex(MediaStore.Images.Media.DATA));
-                        int size = mCursor.getInt(mCursor.getColumnIndex(MediaStore.Images.Media.SIZE)) / 1024;
+                        int size = (int) (mCursor.getDouble(mCursor.getColumnIndex(MediaStore.Video.Media.SIZE)) / 1024);//int超过G会溢出
                         String displayName = mCursor.getString(mCursor.getColumnIndex(MediaStore.Images.Media.DISPLAY_NAME));
                         int width = mCursor.getInt(mCursor.getColumnIndex(MediaStore.Images.Media.WIDTH));
                         int height = mCursor.getInt(mCursor.getColumnIndex(MediaStore.Images.Media.HEIGHT));
-                        //用于展示相册初始化界面
-                        if (path.contains("/storage/emulated/0/messageBoard/photoImgs")) {
-                            mediaBeen.add(new MediaBean(path, size, displayName).SetWidth(width).SetHeight(height));
-                        }
+
+//                        //用于展示相册初始化界面
+//                        if (path.contains("/storage/emulated/0/messageBoard/photoImgs")) {
+//                            mediaBeen.add(new MediaBean(path, size, displayName).SetWidth(width).SetHeight(height));
+//                        }
 
                         // 获取该图片的父路径名
                         String dirPath = new File(path).getParentFile().getAbsolutePath();
 
+                        //过滤3box路径下的
+                        if (dirPath.replace(Environment.getExternalStorageDirectory().getPath(), "").startsWith("/3box/"))
+                            continue;
+
                         //存储对应关系
                         if (allPhotosTemp.containsKey(dirPath)) {
                             //大于1兆的图片才加入
-                            if (size >= 1024) {
+                            if (size >= 100) {
                                 List<MediaBean> data = allPhotosTemp.get(dirPath);
                                 data.add(new MediaBean(path, size, displayName).SetWidth(width).SetHeight(height));
                             }

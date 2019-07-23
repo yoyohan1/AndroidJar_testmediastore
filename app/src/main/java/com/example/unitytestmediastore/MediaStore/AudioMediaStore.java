@@ -46,7 +46,7 @@ public class AudioMediaStore {
                     while (mCursor.moveToNext()) {
                         // 获取图片的路径
                         String path = mCursor.getString(mCursor.getColumnIndex(MediaStore.Audio.Media.DATA));
-                        int size = mCursor.getInt(mCursor.getColumnIndex(MediaStore.Audio.Media.SIZE)) / 1024;
+                        int size = (int) (mCursor.getDouble(mCursor.getColumnIndex(MediaStore.Video.Media.SIZE)) / 1024);//int超过G会溢出
                         String displayName = mCursor.getString(mCursor.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME));
 //                        //用于展示相册初始化界面
 //                        if (path.contains("/storage/emulated/0/messageBoard/photoImgs")) {
