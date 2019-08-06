@@ -207,6 +207,11 @@ public class MainActivity {
     }
 
 
+
+    /*
+    *@author yoyohan
+    *@description:拷贝asset文件夹下的内容
+    */
     public void CopyAssetToSDCard(String fromDir, final String desDir, boolean isOveride) {
         FileUtils.getInstance(UnityPlayer.currentActivity).copyAssetsToSD(fromDir, desDir, isOveride).setFileOperateCallback(new FileUtils.FileOperateCallback() {
             @Override
