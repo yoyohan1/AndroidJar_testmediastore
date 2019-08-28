@@ -107,12 +107,14 @@ public class MediaControl {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Bitmap videoThumbnail = ThumbnailUtils.createVideoThumbnail(path, MINI_KIND);
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                videoThumbnail.compress(Bitmap.CompressFormat.PNG, 100, baos);
-                String outPath = path+ ".png";
+                String outPath = "";
 
                 try {
+                    Bitmap videoThumbnail = ThumbnailUtils.createVideoThumbnail(path, MINI_KIND);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    videoThumbnail.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                    outPath = path + ".png";
+
                     FileOutputStream fos = new FileOutputStream(outPath);
                     fos.write(baos.toByteArray());
                     fos.close();
