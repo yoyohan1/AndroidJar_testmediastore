@@ -34,8 +34,8 @@ public class VideoMediaStore {
                         , MediaStore.Video.Media.DISPLAY_NAME};
                 final Cursor mCursor = mUnityPlayer.getContentResolver().query(mImageUri,
                         projImage,
-                        MediaStore.Video.Media.MIME_TYPE + "=? or " + MediaStore.Video.Media.MIME_TYPE + "=? or " + MediaStore.Video.Media.MIME_TYPE + "=? or " + MediaStore.Video.Media.MIME_TYPE + "=?",
-                        new String[]{"video/mp4", "video/mkv", "video/webm", "video/avi"},
+                        MediaStore.Video.Media.MIME_TYPE + "=? or " + MediaStore.Video.Media.MIME_TYPE + "=? or " + MediaStore.Video.Media.MIME_TYPE + "=?",
+                        new String[]{"video/mp4", "video/mkv", "video/webm"},//, "video/avi"
                         MediaStore.Video.Media.DATE_MODIFIED + " desc");
 
                 if (mCursor != null) {
