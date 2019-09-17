@@ -31,7 +31,7 @@ public class VideoMediaStore {
                 String[] projImage = {MediaStore.Video.Media._ID
                         , MediaStore.Video.Media.DATA
                         , MediaStore.Video.Media.SIZE
-                        , MediaStore.Video.Media.DISPLAY_NAME};
+                        , MediaStore.Video.Media.DISPLAY_NAME,MediaStore.Images.Media.WIDTH, MediaStore.Images.Media.HEIGHT};
                 final Cursor mCursor = mUnityPlayer.getContentResolver().query(mImageUri,
                         projImage,
                         MediaStore.Video.Media.MIME_TYPE + "=? or " + MediaStore.Video.Media.MIME_TYPE + "=? or " + MediaStore.Video.Media.MIME_TYPE + "=?",
@@ -44,6 +44,9 @@ public class VideoMediaStore {
                         String path = mCursor.getString(mCursor.getColumnIndex(MediaStore.Video.Media.DATA));
                         int size = (int) (mCursor.getDouble(mCursor.getColumnIndex(MediaStore.Video.Media.SIZE)) / 1024);//int超过G会溢出
                         String displayName = mCursor.getString(mCursor.getColumnIndex(MediaStore.Video.Media.DISPLAY_NAME));
+                        int width = mCursor.getInt(mCursor.getColumnIndex(MediaStore.Images.Media.WIDTH));
+                        int height = mCursor.getInt(mCursor.getColumnIndex(MediaStore.Images.Media.HEIGHT));
+
                         //用于展示相册初始化界面
 //                        if (path.contains("/storage/emulated/0/messageBoard/photoImgs")) {
 //                            mediaBeen.add(new MediaBean(path, size, displayName));
@@ -59,12 +62,12 @@ public class VideoMediaStore {
                         //存储对应关系
                         if (allPhotosTemp.containsKey(dirPath)) {
                             List<MediaBean> data = allPhotosTemp.get(dirPath);
-                            data.add(new MediaBean(path, size, displayName));
+                            data.add(new MediaBean(path, size, displayName).SetWidth(width).SetHeight(height));
                             //Log.i("cxs","getAllPhotoInfo "+data.size()+",path="+data.get(0).path+",name="+data.get(0).displayName);
                             continue;
                         } else {
                             List<MediaBean> data = new ArrayList<>();
-                            data.add(new MediaBean(path, size, displayName));
+                            data.add(new MediaBean(path, size, displayName).SetWidth(width).SetHeight(height));
                             allPhotosTemp.put(dirPath, data);
                             //Log.i("cxs","getAllPhotoInfo else "+data.size()+",path="+data.get(0).path+",name="+data.get(0).displayName);
                         }
