@@ -31,7 +31,7 @@ public class VideoMediaStore {
                 String[] projImage = {MediaStore.Video.Media._ID
                         , MediaStore.Video.Media.DATA
                         , MediaStore.Video.Media.SIZE
-                        , MediaStore.Video.Media.DISPLAY_NAME,MediaStore.Images.Media.WIDTH, MediaStore.Images.Media.HEIGHT};
+                        , MediaStore.Video.Media.DISPLAY_NAME, MediaStore.Images.Media.WIDTH, MediaStore.Images.Media.HEIGHT};
                 final Cursor mCursor = mUnityPlayer.getContentResolver().query(mImageUri,
                         projImage,
                         MediaStore.Video.Media.MIME_TYPE + "=? or " + MediaStore.Video.Media.MIME_TYPE + "=? or " + MediaStore.Video.Media.MIME_TYPE + "=?",
@@ -54,6 +54,9 @@ public class VideoMediaStore {
 
                         //显示用户3box存储中大于5M的视频，但不包含下载目录的视频
                         if (size < 1024 * 5)
+                            continue;
+
+                        if (width > 1024 * 4 || height > 1024 * 4)
                             continue;
 
                         // 获取该图片的父路径名
