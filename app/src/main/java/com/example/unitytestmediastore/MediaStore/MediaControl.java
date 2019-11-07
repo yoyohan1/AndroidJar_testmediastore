@@ -111,14 +111,18 @@ public class MediaControl {
 
                 try {
                     Bitmap videoThumbnail = ThumbnailUtils.createVideoThumbnail(path, MINI_KIND);
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    videoThumbnail.compress(Bitmap.CompressFormat.PNG, 100, baos);
-                    outPath = path + ".png";
 
-                    FileOutputStream fos = new FileOutputStream(outPath);
-                    fos.write(baos.toByteArray());
-                    fos.close();
-                    baos.close();
+                    if (videoThumbnail != null) {
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        videoThumbnail.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                        outPath = path + ".png";
+
+                        FileOutputStream fos = new FileOutputStream(outPath);
+                        fos.write(baos.toByteArray());
+                        fos.close();
+                        baos.close();
+                    }
+
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
