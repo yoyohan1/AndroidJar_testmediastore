@@ -15,6 +15,8 @@ import com.example.unitytestmediastore.MediaStore.*;
 import com.example.unitytestmediastore.MediaStore.VideoMediaStore;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.threeglasses.threebox.mylibrary.CompareApi;
+import com.threeglasses.threebox.mylibrary.OnDataFinishedListener;
 import com.unity3d.player.UnityPlayer;
 
 //import org.apache.commons.codec.binary.Base64;
@@ -207,11 +209,10 @@ public class MainActivity {
     }
 
 
-
     /*
-    *@author yoyohan
-    *@description:拷贝asset文件夹下的内容
-    */
+     *@author yoyohan
+     *@description:拷贝asset文件夹下的内容
+     */
     public void CopyAssetToSDCard(String fromDir, final String desDir, boolean isOveride) {
         FileUtils.getInstance(UnityPlayer.currentActivity).copyAssetsToSD(fromDir, desDir, isOveride).setFileOperateCallback(new FileUtils.FileOperateCallback() {
             @Override
@@ -224,6 +225,43 @@ public class MainActivity {
                 SendMessageToUnity(2, "拷贝到" + desDir + "失败！", 1);
             }
         });
+    }
+
+    private CompareApi compareApi = null;
+
+    private void InitMylibrart_release_arr() {
+        Log.i("Unity", "开始InitMylibrart_release_arr！");
+        this.compareApi = new CompareApi();
+        this.compareApi.init(mContext);
+        Log.i("Unity", "InitMylibrart_release_arr完成！");
+    }
+
+    OnDataFinishedListener onDataFinishedListener = new OnDataFinishedListener() {
+        @Override
+        public void onDataSuccessfully(int i) {
+            SendMessageToUnity(7, i + "", 0);
+        }
+
+        @Override
+        public void onDataFailed() {
+            SendMessageToUnity(7, "获取图片和视频的类型失败！！！！", 1);
+        }
+    };
+
+    public void getCompareVideo(String path) {
+        if (compareApi == null) {
+            InitMylibrart_release_arr();
+        }
+        Log.i("cxs", "安卓端getCompareVideo方法接收到的path：" + path);
+        this.compareApi.getCompareVideo(Uri.parse(path), onDataFinishedListener);
+    }
+
+    public void getCompareImage(String path) {
+        if (compareApi == null) {
+            InitMylibrart_release_arr();
+        }
+        Log.i("cxs", "安卓端getCompareImage方法接收到的path：" + path);
+        this.compareApi.getCompareImage(Uri.parse(path), onDataFinishedListener);
     }
 
 

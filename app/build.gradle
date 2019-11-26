@@ -34,10 +34,9 @@ dependencies {
     compileOnly files('libs/unity-classes.jar')
     compileOnly files('libs/shareData.jar')
     compileOnly(name: 'app-debug', ext: 'aar')
+    compileOnly(name: 'mylibrary-release', ext: 'aar')
+    compileOnly files('libs/TestCompareVideo.jar')
     implementation files('libs/LuBan.jar')
-
-
-
 }
 
 task makeJar(type:Copy){
