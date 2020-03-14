@@ -53,11 +53,11 @@ public class FileUtils {
         }
     };
 
-    public FileUtils copyAssetsToSD(final String srcPath, final String sdPath,final boolean isOveride) {
+    public FileUtils copyAssetsToSD(final String srcPath, final String sdPath, final boolean isOveride) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                copyAssetsToDst(context, srcPath, sdPath,isOveride);
+                copyAssetsToDst(context, srcPath, sdPath, isOveride);
                 if (isSuccess)
                     handler.obtainMessage(SUCCESS).sendToTarget();
                 else
@@ -71,51 +71,46 @@ public class FileUtils {
         this.callback = callback;
     }
 
-    private void copyAssetsToDst(Context context, String srcPath, String dstPath,boolean isOveride) {
+    private void copyAssetsToDst(Context context, String srcPath, String dstPath, boolean isOveride) {
         try {
             String fileNames[] = context.getAssets().list(srcPath);
 
 //            for (String fileName : fileNames)
 //            {
-//                Log.i("Unity","fileName：：：：：：:"+fileName);
+//                Log.i("Unity","fileName:"+fileName);
 //            }
- /*
- * 这个fileNames包含文件夹和文件
- *
- * */
+            /*
+             * 这个fileNames包含文件夹和文件
+             *
+             * */
 
-            if (fileNames.length > 0)
-            {
-                File file = new File( dstPath);//Environment.getExternalStorageDirectory(),,写上这个会多加个/storage/emulated/0 造成错误 困扰我
+            //Log.i("Unity", "fileNames.length:" + fileNames.length);
+
+            if (fileNames.length > 0) {
+                File file = new File(dstPath);//Environment.getExternalStorageDirectory(),,写上这个会多加个/storage/emulated/0 造成错误 困扰我
                 if (!file.exists()) file.mkdirs();
 
                 //遍历该文件夹内所有文件（包含文件夹）
-                for (String fileName : fileNames)
-                {
+                for (String fileName : fileNames) {
                     String tempDesPath = dstPath + File.separator + fileName;
 
-                    if (isOveride==false&&new File(tempDesPath).exists())
+                    if (isOveride == false && new File(tempDesPath).exists())
                         continue;
 
-                   // Log.i("Unity","tempDesPath:"+tempDesPath);
+                    // Log.i("Unity","tempDesPath:"+tempDesPath);
 
                     // 拷贝assets下的某一个目录
-                    if (!srcPath.equals(""))
-                    {
-                        copyAssetsToDst(context, srcPath + File.separator + fileName, tempDesPath,isOveride);
-                    }
-                    else
-                    {
+                    if (!srcPath.equals("")) {
+                        copyAssetsToDst(context, srcPath + File.separator + fileName, tempDesPath, isOveride);
+                    } else {
                         // 拷贝整个assets文件夹
-                        copyAssetsToDst(context, fileName, tempDesPath,isOveride);
+                        copyAssetsToDst(context, fileName, tempDesPath, isOveride);
                     }
                 }
-            }
-            else
-            {
+            } else {
                 //Log.i("Unity", "dstPath---------------------------1"+dstPath);
 
-                File outFile = new File( dstPath);//,写上这个会多加个/storage/emulated/0 造成错误 困扰我Environment.getExternalStorageDirectory(),
+                File outFile = new File(dstPath);//,写上这个会多加个/storage/emulated/0 造成错误 困扰我Environment.getExternalStorageDirectory(),
 
                 InputStream is = context.getAssets().open(srcPath);
                 FileOutputStream fos = new FileOutputStream(outFile);
@@ -128,12 +123,13 @@ public class FileUtils {
                 is.close();
                 fos.close();
                 //Log.i("Unity", "outFile---------------------------2");
-                Log.i("Unity", outFile.getAbsolutePath());
+                Log.i("Unity", "拷贝单个文件成功，目标路径："+outFile.getAbsolutePath());
             }
             isSuccess = true;
         } catch (Exception e) {
             e.printStackTrace();
             errorStr = e.getMessage();
+            //Log.i("Unity", "errorStr:" + errorStr);
             isSuccess = false;
         }
     }
