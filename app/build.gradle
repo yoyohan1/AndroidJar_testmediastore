@@ -18,6 +18,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    android.libraryVariants.all { variant ->
+        variant.outputs.all {
+            def fileName = "unitytestmediastore.aar"
+            outputFileName = fileName
+        }
+    }
 }
 
 dependencies {
@@ -29,7 +35,7 @@ dependencies {
     //implementation files('libs/TestCompareVideo.jar')
     //implementation(name: 'mylibrary-debug', ext: 'aar')
     //implementation files('libs/commons-codec-1.11.jar')
-    compileOnly files('libs/gson-2.8.0.jar')
+    implementation files('libs/gson-2.8.0.jar')
     compileOnly files('libs/commons-codec-1.11.jar')
     compileOnly files('libs/unity-classes.jar')
     compileOnly files('libs/shareData.jar')
