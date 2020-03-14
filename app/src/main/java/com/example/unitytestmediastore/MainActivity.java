@@ -21,6 +21,9 @@ import com.unity3d.player.UnityPlayer;
 
 //import org.apache.commons.codec.binary.Base64;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -217,12 +220,12 @@ public class MainActivity {
         FileUtils.getInstance(UnityPlayer.currentActivity).copyAssetsToSD(fromDir, desDir, isOveride).setFileOperateCallback(new FileUtils.FileOperateCallback() {
             @Override
             public void onSuccess() {
-                SendMessageToUnity(2, "拷贝到" + desDir + "成功！", 0);
+                SendMessageToUnityNew(2, "拷贝到" + desDir + "成功！", 0);
             }
 
             @Override
             public void onFailed(String error) {
-                SendMessageToUnity(2, "拷贝到" + desDir + "失败！", 1);
+                SendMessageToUnityNew(2, "拷贝到" + desDir + "失败！", 1);
             }
         });
     }
@@ -280,6 +283,28 @@ public class MainActivity {
         jsonObject.addProperty("status", status);
         jsonObject.addProperty("requestId", requestId);
         jsonObject.addProperty("msg", msg);
+
+        UnityPlayer.UnitySendMessage("YouDaSdk", "OnOperationResponce", jsonObject.toString());
+    }
+
+
+    /**
+     * code 0成功,1失败,2其他状态
+     * requestId 发送的请求ID Unity根据此值判断做出响应
+     * msg 消息体 Json格式
+     * 适配新版的YoudaSDKTool
+     */
+    public void SendMessageToUnityNew(int requestId, String msg, int code) {
+        Log.i("Unity", "SendMessageToUnity调用成功！requestId:" + requestId + " msg:" + msg + " code:" + code);
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("requestId", requestId);
+            jsonObject.put("msg", msg);
+            jsonObject.put("code", code);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         UnityPlayer.UnitySendMessage("YouDaSdk", "OnOperationResponce", jsonObject.toString());
     }
